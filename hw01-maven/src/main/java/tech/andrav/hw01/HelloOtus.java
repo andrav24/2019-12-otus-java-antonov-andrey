@@ -9,17 +9,17 @@ import java.util.List;
 
 /**
  * Created by tully.
- *
- * Example for L01.1
+ * Edited by Antonov Andrey.
+ * Example for hw01-maven
  *
  * To start the application:
  * mvn package
- * java -jar ./L01-maven/target/L01-maven-jar-with-dependencies.jar
- * java -cp "./L01-maven/target/L01-maven.jar:${HOME}/.m2/repository/com/google/guava/guava/27.1-jre/guava-27.1-jre.jar" ru.otus.l011.Main
+ * java -jar ./hw01-maven/target/hw01-maven-jar-with-dependencies.jar
+ * java -cp "./hw01-maven/target/hw01-maven.jar:${HOME}/.m2/repository/com/google/guava/guava/27.1-jre/guava-27.1-jre.jar" tech.andrav.hw01.HelloOtus
  *
  * To unzip the jar:
- * unzip -l L01-maven.jar
- * unzip -l L01-maven-jar-with-dependencies.jar
+ * unzip -l hw01-maven.jar
+ * unzip -l hw01-maven-jar-with-dependencies.jar
  *
  * To build:
  * mvn package
