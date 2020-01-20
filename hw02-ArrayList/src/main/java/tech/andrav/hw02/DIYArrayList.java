@@ -7,23 +7,23 @@ public class DIYArrayList<E> implements List<E> {
     private static final int DEFAULT_CAPACITY = 10;
 
     private int size = 0;
-    private E[] items;
+    private Object[] items;
 
     public DIYArrayList() {
         super();
-        this.items = (E[]) new Object[DEFAULT_CAPACITY];
+        this.items = new Object[DEFAULT_CAPACITY];
     }
 
     public DIYArrayList(int initialCapacity) {
         super();
         if (initialCapacity <= 0)
             throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
-        this.items = (E[]) new Object[initialCapacity];
+        this.items = new Object[initialCapacity];
     }
 
     private void grow() {
-        E[] old = this.items;
-        this.items = (E[]) new Object[old.length << 1];
+        Object[] old = this.items;
+        this.items = new Object[old.length << 1];
         System.arraycopy(old, 0, items, 0, this.size);
     }
 
@@ -60,9 +60,7 @@ public class DIYArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        if (!checkCapacity()) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        checkCapacity();
         items[size] = e;
         size++;
         return true;
@@ -70,9 +68,10 @@ public class DIYArrayList<E> implements List<E> {
 
     @Override
     public void add(int index, E e) {
-        if (!checkCapacity()) {
-            throw new ArrayIndexOutOfBoundsException();
+        if (index < 0 || index > this.size) {
+            throw new IndexOutOfBoundsException();
         }
+        checkCapacity();
         System.arraycopy(this.items, index, this.items, index + 1, this.size - index);
         this.items[index] = e;
         this.size++;
@@ -92,17 +91,26 @@ public class DIYArrayList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        return this.items[index];
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return (E) this.items[index];
     }
 
     @Override
     public E set(int index, E element) {
-        return this.items[index] = element;
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return (E) (this.items[index] = element);
     }
 
     @Override
     public E remove(int index) {
-        E removeItem = this.items[index];
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        E removeItem = (E) this.items[index];
         System.arraycopy(this.items, index + 1, this.items, index, this.size - index - 1);
         this.size--;
         return removeItem;
@@ -183,7 +191,7 @@ public class DIYArrayList<E> implements List<E> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            return DIYArrayList.this.items[cursorPos++];
+            return (E) DIYArrayList.this.items[cursorPos++];
         }
 
         public void remove() {
