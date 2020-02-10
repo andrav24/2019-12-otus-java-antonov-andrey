@@ -8,9 +8,10 @@ public class Demo {
     }
 
     private void action() {
-        LoggingInterface loggingInterfaceInst = IoC.createMyClass(new LoggingInterfaceImpl());
+        LoggingInterface loggingInterfaceInst = IoC.createMyClass(new ClassWithLog());
         loggingInterfaceInst.calculation(16);
-        LoggingInterface loggingInterfaceInst2 = IoC.createMyClass(new LoggingInterfaceImpl2());
+        LoggingInterface loggingInterfaceInst2 = IoC.createMyClass(new ClassWithoutLog());
         loggingInterfaceInst2.calculation(16);
+        loggingInterfaceInst.calculation(106);
     }
 }

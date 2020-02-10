@@ -1,6 +1,6 @@
 package tech.andrav.hw04.aop.proxy;
 
-public class LoggingInterfaceImpl implements LoggingInterface {
+public class ClassWithLog implements LoggingInterface {
 
     @Log
     @Override
