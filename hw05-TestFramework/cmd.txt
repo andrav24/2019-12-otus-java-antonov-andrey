@@ -1,0 +1,1 @@
+cp ~/.m2/repository/tech/andrav/hw05-TestFramework/2019-12-SNAPSHOT/hw05-TestFramework-2019-12-SNAPSHOT-jar-with-dependencies.jar ~/test/DIYjTester.jar
