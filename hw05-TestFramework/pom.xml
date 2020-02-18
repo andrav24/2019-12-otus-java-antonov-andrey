@@ -40,7 +40,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>dev.andrav.framework.core.Framework</mainClass>
+                            <mainClass>tech.andrav.framework.core.Framework</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
