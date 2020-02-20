@@ -38,6 +38,5 @@ public class MyClassOneTest {
 
     @After
     public void tearDown() {
-
     }
 }

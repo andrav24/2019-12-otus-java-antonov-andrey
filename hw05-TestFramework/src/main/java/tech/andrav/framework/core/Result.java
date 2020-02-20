@@ -3,13 +3,20 @@ package tech.andrav.framework.core;
 public class Result {
     private final String testClass;
     private final String testMethod;
-    private final boolean testResult;
+    private Boolean testResult;
 
-    public Result(String testClass, String testMethod, boolean testResult) {
+    public Result(String testClass, String testMethod) {
+        this.testClass = testClass;
+        this.testMethod = testMethod;
+        this.testResult = null;
+    }
+
+    public Result(String testClass, String testMethod, Boolean testResult) {
         this.testClass = testClass;
         this.testMethod = testMethod;
         this.testResult = testResult;
     }
+
 
     public String getTestClass() {
         return testClass;
@@ -19,12 +26,14 @@ public class Result {
         return testMethod;
     }
 
-    public boolean isTestResult() {
+    public Boolean getTestResult() {
         return testResult;
     }
 
-    public int getTestResultAsInt() {
-        return testResult ? 1 : 0;
+    public void setTestResult(Boolean result) {
+        if (testResult == null) {
+            testResult = result;
+        }
     }
 
     public String getPrintString() {

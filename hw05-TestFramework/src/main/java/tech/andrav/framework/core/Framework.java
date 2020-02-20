@@ -1,37 +1,19 @@
 package tech.andrav.framework.core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Framework {
 
-    List<List<Result>> listOfResults = new ArrayList<>();
+    private final List<List<Result>> listOfResults = new ArrayList<>();
 
-    public static void main(String[] args) throws Exception {
-        String[] args0;
-        Result res = null;
+    public void run(String[] args) throws Exception {
 
-        if (args.length == 0) {
-            args0 = new String[]{"tech.andrav.framework.demo.test.MyClassOneTest","tech.andrav.framework.demo.test.MyClassTwoTest"};
-        } else {
-            args0 = Arrays.copyOf(args,args.length);
-        }
-
-        Framework app = new Framework();
-        app.start();
-        app.runTesting(args0);
-        app.printResult();
-        app.finish();
-    }
-
-    private void start() {
+        runTesting(args);
+        printResult();
 
     }
 
-    private void finish() {
-
-    }
 
     private void runTesting(String[] args) throws Exception {
         for (String arg : args) {
@@ -52,6 +34,8 @@ public class Framework {
         String currentClass = "";
 
         for (List<Result> results : listOfResults) {
+            totalCount += results.size();   // кол-во запущенных тестов
+
             for (Result result : results) {
                 if (!currentClass.equals(result.getTestClass())) {
                     currentClass = result.getTestClass();
@@ -60,22 +44,19 @@ public class Framework {
                 System.out.print("\t" + String.format("%-" + 15 +"s", result.getPrintString()));
                 System.out.println(result.getTestMethod());
 
-                switch (result.getTestResultAsInt()) {
-                    case 0:
-                        wasFailure ++;
-                        break;
-                    case 1:
-                        wasSuccessful++;
-                        break;
+                if (result.getTestResult()) {
+                    wasSuccessful++;        // кол-во успешных тестов
+                } else {
+                    wasFailure ++;          // кол-во упавших тестов
                 }
             }
-            totalCount += results.size();
         }
         System.out.println();
         System.out.println("Tests run: " + totalCount);
         System.out.println("Tests successful: " + wasSuccessful);
         System.out.println("Tests failure: " + wasFailure);
     }
+
     @Override
     public String toString() {
         return super.toString();

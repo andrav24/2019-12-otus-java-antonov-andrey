@@ -6,6 +6,7 @@ import tech.andrav.framework.annotation.Test;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -15,19 +16,63 @@ public class TestRunner {
     private final List<Method> annotatedBefore = new ArrayList<>();
     private final List<Method> annotatedAfter = new ArrayList<>();
     private final List<Method> annotatedTest = new ArrayList<>();
+    private final List<Result> results = new ArrayList<>();
 
     TestRunner(Class<?> clazz) {
         this.clazz = clazz;
     }
 
     public List<Result> exec () throws Exception {
+        classAnalyzer();
+        runTests();
+        return results;
+    }
 
-        List<Result> results = new ArrayList<>();
+    private void runTests() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        Collections.shuffle(annotatedTest);
+        for (Method methodTest : annotatedTest) {
+            Result res = new Result(clazz.getName(), methodTest.getName());
+            Object obj = null;
 
-        Constructor<?> constructor = clazz.getConstructor();
+            try {
+                Constructor<?> constructor = clazz.getConstructor();
+                obj = constructor.newInstance();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                runAllAnnotatedBefore(obj);
+                methodTest.invoke(obj);
+            } catch (Exception e) {
+                res.setTestResult(false);
+            } finally {
+                runAllAnnotatedAfter(obj);
+            }
+
+            // если тесты не упали - устанавливаем результат в true
+            if (res.getTestResult() == null) {
+                res.setTestResult(true);
+            }
+
+            results.add(res);
+        }
+    }
+
+    private void runAllAnnotatedBefore(Object obj) throws InvocationTargetException, IllegalAccessException {
+        for (Method method : annotatedBefore) {
+            method.invoke(obj);
+        }
+    }
+
+    private void runAllAnnotatedAfter(Object obj) throws InvocationTargetException, IllegalAccessException {
+        for (Method method : annotatedAfter) {
+            method.invoke(obj);
+        }
+    }
+
+    private void classAnalyzer() {
         Method[] methods = clazz.getDeclaredMethods();
-
-        // анализ класса
         for (Method method : methods) {
             Annotation[] annotations = method.getDeclaredAnnotations();
             for (Annotation annotation : annotations){
@@ -42,43 +87,5 @@ public class TestRunner {
                 }
             }
         }
-
-        // выполнение тестов
-        Collections.shuffle(annotatedTest);
-        for (Method methodTest : annotatedTest) {
-            Result res = null;
-            Object obj = constructor.newInstance();
-
-            try {
-                for (Method methodBefore : annotatedBefore) {
-                    methodBefore.invoke(obj);
-                }
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-
-            try {
-                methodTest.invoke(obj);
-            } catch (Exception e) {
-                res = new Result(clazz.getName(), methodTest.getName(), false);
-            } finally {
-                if (res == null) {
-                    res = new Result(clazz.getName(), methodTest.getName(), true);
-                }
-            }
-
-            try {
-                for (Method methodAfter : annotatedAfter) {
-                    methodAfter.invoke(obj);
-                }
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-
-            // запись текущего результата теста в список результатов
-            results.add(res);
-        }
-
-        return results;
     }
 }
