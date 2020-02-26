@@ -1,4 +1,9 @@
 package dev.andrav.atm;
 
-public class CellBox {
+import java.util.List;
+
+public interface CellBox {
+    int getCellAmount();
+    //<T> void push(List<T> list);
+    //<T> List<T> pop();
 }

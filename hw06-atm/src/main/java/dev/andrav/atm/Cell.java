@@ -1,10 +1,11 @@
 package dev.andrav.atm;
 
-import java.util.Collection;
+import java.rmi.NotBoundException;
+import java.util.List;
 
-public interface Cell {
+public interface Cell<T> {
     int getCellCurrentSize();
     int getCellCapacity();
-    void push(Collection<?> pack);
-    Object pull();
+    boolean push(T unit);
+    T pop();
 }
