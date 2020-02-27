@@ -20,6 +20,7 @@ public class CellBoxImpl implements CellBox {
         cellAmount = storage.size();
     }
 
+    @Override
     public <T extends MyCurrency> void push(List<Banknote<T>> banknotes) {
         banknotes.forEach(e -> storage.get(e.getBanknoteValue()).push(e));
     }
@@ -40,7 +41,6 @@ public class CellBoxImpl implements CellBox {
                                 "Cell " + key +
                                 ":\tCapacity: " + storage.get(key).getCellCapacity() +
                                 "\tCurrent size: " + storage.get(key).getCellCurrentSize()));
-        System.out.println("Cell nominals: ");
-        storage.keySet().forEach(System.out::println);
+
     }
 }

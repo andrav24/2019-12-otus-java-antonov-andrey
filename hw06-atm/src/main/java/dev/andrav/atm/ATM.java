@@ -1,13 +1,17 @@
 package dev.andrav.atm;
 
 import dev.andrav.atm.currency.Banknote;
-import java.util.Collection;
+import dev.andrav.atm.currency.MyCurrency;
+
+import java.util.List;
 
 public interface ATM {
+    void init();
 
-    void deposit(Collection<Banknote<?>> banknote);
+    <T extends Banknote<? extends MyCurrency>> void deposit(List<T> banknote);
 
-    Collection<Banknote<?>> withdraw(int amount);
+    <T extends Banknote<? extends MyCurrency>> List<T> withdraw(int amount);
 
-    int getBalanceATM();
+    void getBalanceATM();
+
 }

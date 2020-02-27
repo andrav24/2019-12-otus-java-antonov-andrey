@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface CellBox {
     int getCellAmount();
-    //<T> void push(List<T> list);
+    void print();
+    void push(List<?> list);
     //<T> List<T> pop();
 }
