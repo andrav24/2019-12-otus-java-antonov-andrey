@@ -1,11 +1,8 @@
-package dev.andrav.atm.currency;
+package dev.andrav.hw06.currency;
 
 public class RUB extends MyCurrency {
 
     private static final CurrencyType CURRENCY_TYPE = CurrencyType.RUB;
-
-    //Nominals nominalType;
-    //CurrencyType currencyType;
 
     private RUB(MoneyNominal nominalType) {
         super(nominalType, CURRENCY_TYPE);

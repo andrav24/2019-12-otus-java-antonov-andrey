@@ -1,7 +1,4 @@
-package dev.andrav.atm;
-
-import java.rmi.NotBoundException;
-import java.util.List;
+package dev.andrav.hw06.atm;
 
 public interface Cell<T> {
     int getCellCurrentSize();

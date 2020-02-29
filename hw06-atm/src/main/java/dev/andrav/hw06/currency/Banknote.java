@@ -1,4 +1,4 @@
-package dev.andrav.atm.currency;
+package dev.andrav.hw06.currency;
 
 public class Banknote<T extends MyCurrency> implements Comparable<Banknote<T>> {
 

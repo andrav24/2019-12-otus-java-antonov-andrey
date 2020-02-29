@@ -1,9 +1,12 @@
-package dev.andrav.atm;
+package dev.andrav.hw06.atm;
+
+import dev.andrav.hw06.currency.Banknote;
+import dev.andrav.hw06.currency.MyCurrency;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CellImpl<T> implements Cell<T> {
+public class CellImpl<T extends Banknote<? extends MyCurrency>> implements Cell<T> {
 
     private int cellCurrentSize;
     private int cellCapacity;

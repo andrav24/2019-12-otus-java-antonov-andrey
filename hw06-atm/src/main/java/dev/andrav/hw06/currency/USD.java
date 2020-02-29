@@ -1,11 +1,8 @@
-package dev.andrav.atm.currency;
+package dev.andrav.hw06.currency;
 
 public class USD extends MyCurrency {
 
     private static final CurrencyType CURRENCY_TYPE = CurrencyType.USD;
-
-    //Nominals nominalType;
-    //CurrencyType currencyType;
 
     private USD(MoneyNominal nominalType) {
         super(nominalType, CURRENCY_TYPE);
